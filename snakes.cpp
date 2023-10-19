@@ -23,7 +23,6 @@ class Snake {
             void* next;
             void* previous;
         } snakeBit;
-
         int snakeLength = 0;
 
         // head of the snake acts as the start of a double linked list
@@ -41,24 +40,6 @@ class Snake {
             for (int i = 0; i < 3; ++i) {
                 this->increment_length();                
             }   
-        
-
-            snakeBit* current = head;
-            while (current != NULL) {
-
-                std::cout << current->xCoord << " " << current->yCoord << "\n"; 
-                current = (snakeBit*) current->previous;
-            }
-
-            current = get_tail();
-            std::cout << "\n";
-            while (current != NULL) {
-                std::cout << current->xCoord << " " << current->yCoord << "\n";
-
-
-                current = (snakeBit*) current->next;
-                
-            }
         }    
 
         // return current tail
@@ -74,10 +55,8 @@ class Snake {
         void increment_length() {
             
             snakeBit* newTail = (snakeBit*) malloc(sizeof(snakeBit));
-
             snakeBit* tail = get_tail();
             tail->previous = (snakeBit*) newTail;
-
             newTail->next = (snakeBit*) tail;
             newTail->orient = tail->orient;
             newTail->previous = NULL;
@@ -138,9 +117,9 @@ class Snake {
 
         // update the direction each snake bit is facing to equal the orientation
         // of the succeeding bit, from tail to head
-        void update_orientations() {               
-            snakeBit* current = get_tail();
+        void update_orientations() {       
 
+            snakeBit* current = get_tail();
             // exclude head of snake from updating (handled directly by key press)
             while (current->next != NULL) {
                 current->orient = ((snakeBit*)current->next)->orient;
